@@ -233,17 +233,52 @@ Public Class PdfManipulation
     Public Shared Function AddReturnLinks(ByVal pdfSourcePath As String, ByVal appendList As List(Of AttachmentFile), ByVal outputPath As String) As Boolean
 
         Dim bytes As Byte() = File.ReadAllBytes(pdfSourcePath)
-        Dim blackFont As Font = FontFactory.GetFont("Arial", 12, Font.NORMAL, BaseColor.BLACK)
+
         Using stream As New MemoryStream()
+
             Dim reader As New PdfReader(bytes)
+
             Using stamper As New PdfStamper(reader, stream)
+
                 Dim pages As Integer = reader.NumberOfPages
+
                 For i As Integer = 1 To pages
-                    ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, New Phrase(i.ToString(), blackFont), 568.0F, 15.0F, 0)
+
+                    Dim curPage As Integer = i
+                    Dim releventAttachment As List(Of AttachmentFile) = appendList.Where(Function(a) curPage >= a.AttachmentStartPage And curPage <= a.AttachmentEndPage).ToList
+                    Dim returnLinkPage As Integer
+
+                    Select Case releventAttachment.Count
+                        Case 0
+                            'do nothing
+                            Continue For
+                        Case 1
+                            returnLinkPage = releventAttachment.First.LinkPage
+                        Case Else
+                            MsgBox("Something went wrong in trying to add the return links for Page " & curPage)
+                            Continue For
+
+                    End Select
+
+                    Dim curContent As PdfContentByte = stamper.GetOverContent(i)
+                    Dim rect As New Rectangle(10, 10, 70, 30, 0)
+
+                    Dim pcb As New PdfContentByte(stamper.Writer)
+                    pcb.SetColorFill(BaseColor.BLUE)
+
+                    Dim linkAnnotation As PdfAnnotation = PdfAnnotation.CreateLink(stamper.Writer, rect, PdfAnnotation.HIGHLIGHT_INVERT, returnLinkPage, New PdfDestination(PdfDestination.FIT))
+                    Dim imageAnnotation As PdfAnnotation = PdfAnnotation.CreateFreeText(stamper.Writer, rect, "Return", pcb)
+
+                    stamper.AddAnnotation(linkAnnotation, i)
+                    stamper.AddAnnotation(imageAnnotation, i)
+
                 Next
+
             End Using
+
             bytes = stream.ToArray()
         End Using
+
         File.WriteAllBytes(outputPath, bytes)
 
         Return True
