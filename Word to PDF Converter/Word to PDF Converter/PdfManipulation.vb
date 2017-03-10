@@ -82,8 +82,8 @@ Public Class PdfManipulation
 
                         'set the eventual insert page (and increment for next one)
                         attachmentFile.AttachmentStartPage = currentInsertPage
-                        attachmentFile.AttachmentEndPage = currentInsertPage + GetPdfNumPages(attachmentPath)
-                        currentInsertPage = currentInsertPage + attachmentFile.AttachmentEndPage - 1
+                        attachmentFile.AttachmentEndPage = currentInsertPage + GetPdfNumPages(attachmentPath) - 1
+                        currentInsertPage = attachmentFile.AttachmentEndPage + 1
 
                         'add to list
                         tempList.Add(attachmentFile)
@@ -141,6 +141,7 @@ Public Class PdfManipulation
         Dim R As New PdfReader(pdfSourcePath)
         Dim pageDictionary As PdfDictionary
         Dim annots As PdfArray
+        Dim curLink As Integer 'used for tracking which link we're working on in the appendList
 
         Dim mainDocNumPages As Integer = GetPdfNumPages(appendList(0).SourcePath) 'The first item in the append list is always the main document
 
@@ -149,6 +150,8 @@ Public Class PdfManipulation
             Using Doc As New Document()
                 Using writer As New PdfCopy(Doc, FS)
                     Doc.Open()
+
+                    curLink = 1 'this also skips the first entry in appendList which is the main doc
 
                     'Loop through each page
                     For i As Integer = 1 To mainDocNumPages
@@ -164,7 +167,7 @@ Public Class PdfManipulation
                             Continue For
                         End If
 
-                        'Loop through each annotation
+                        'Loop through each annotation                        
                         For Each A As PdfObject In annots.ArrayList
 
                             'Convert the iText-specific object as a generic pdf object
@@ -180,8 +183,6 @@ Public Class PdfManipulation
                                 Continue For
                             End If
 
-                            Dim l As New Chunk()
-
                             'Get the ACTION for the current annotation
                             Dim annotationAction As PdfDictionary = DirectCast(annotationDictionary.Get(PdfName.A), PdfDictionary)
 
@@ -196,14 +197,16 @@ Public Class PdfManipulation
                                 'The destination is an array containing an indirect reference to the page as well as a fitting option
                                 Dim NewLocalDestination As New PdfArray()
 
-                                'Link it to page 2
-                                NewLocalDestination.Add(R.GetPageOrigRef(2))
+                                'Link it to appropriate page
+                                NewLocalDestination.Add(R.GetPageOrigRef(appendList(curLink).AttachmentStartPage))
 
                                 'Set it to fit page
                                 NewLocalDestination.Add(PdfName.FIT)
 
                                 'Add the array to the annotation's destination (/D)
                                 annotationAction.Put(PdfName.D, NewLocalDestination)
+
+                                curLink = curLink + 1
 
                             End If
 

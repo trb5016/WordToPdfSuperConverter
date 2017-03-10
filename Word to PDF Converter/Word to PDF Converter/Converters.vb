@@ -11,7 +11,7 @@ Public Class Converters
 
             Case ".doc", ".docx", ".docm"
 
-                Dim tempPath As String = Path.GetTempFileName
+                Dim tempPath As String = Path.ChangeExtension(Path.GetTempFileName, "pdf")
 
                 If ConvertWordToPdf(FilePath, tempPath) = True Then
                     Return tempPath

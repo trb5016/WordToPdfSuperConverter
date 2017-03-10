@@ -7,9 +7,9 @@ Public Class SuperConverter
         Dim appendList As New List(Of PdfManipulation.AttachmentFile)
         Dim appendFileList As List(Of String)
 
-        Dim tempSourcePdf As String = Path.GetTempFileName
-        Dim tempIntermediatePdf As String = Path.GetTempFileName
-        Dim tempIntermediatePdf2 As String = Path.GetTempFileName
+        Dim tempSourcePdf As String = Path.ChangeExtension(Path.GetTempFileName, "pdf")
+        Dim tempIntermediatePdf As String = Path.ChangeExtension(Path.GetTempFileName, "pdf")
+        Dim tempIntermediatePdf2 As String = Path.ChangeExtension(Path.GetTempFileName, "pdf")
         Dim pdfPath As String = Path.ChangeExtension(WordDocPath, "pdf")
         Call Converters.ConvertWordToPdf(WordDocPath, tempSourcePdf)
 
