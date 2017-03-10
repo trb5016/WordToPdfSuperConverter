@@ -82,7 +82,8 @@ Public Class PdfManipulation
 
                         'set the eventual insert page (and increment for next one)
                         attachmentFile.AttachmentStartPage = currentInsertPage
-                        currentInsertPage = currentInsertPage + GetPdfNumPages(attachmentPath)
+                        attachmentFile.AttachmentEndPage = currentInsertPage + GetPdfNumPages(attachmentPath)
+                        currentInsertPage = currentInsertPage + attachmentFile.AttachmentEndPage - 1
 
                         'add to list
                         tempList.Add(attachmentFile)
@@ -206,8 +207,6 @@ Public Class PdfManipulation
 
                             End If
 
-                            Exit For
-
                         Next
 
                     Next
@@ -240,6 +239,7 @@ Public Class PdfManipulation
         Public IsMainDocument As Boolean
         Public LinkPage As Integer
         Public AttachmentStartPage As Integer
+        Public AttachmentEndPage As Integer
 
     End Class
 
