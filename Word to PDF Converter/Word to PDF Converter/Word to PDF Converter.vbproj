@@ -75,7 +75,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conversion.vb" />
+    <Compile Include="Converters.vb" />
+    <Compile Include="PdfManipulation.vb" />
+    <Compile Include="SuperConverter.vb" />
     <Compile Include="HelperFunctions.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>

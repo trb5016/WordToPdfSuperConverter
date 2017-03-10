@@ -1,9 +1,4 @@
-﻿Imports System.IO
-
-Imports iTextSharp.text
-Imports iTextSharp.text.pdf
-
-
+﻿
 Public Class Form1
 
 
@@ -11,7 +6,7 @@ Public Class Form1
 
         Dim sourceDocPath As String = HelperFunctions.SourceDocument
 
-        Call Conversion.ConvertWordLinksToPdfandMergeAll(sourceDocPath)
+        Call SuperConverter.ConvertWordLinksToPdfandMergeAll(sourceDocPath)
 
     End Sub
 
