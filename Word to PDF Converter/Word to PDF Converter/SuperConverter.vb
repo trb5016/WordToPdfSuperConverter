@@ -9,6 +9,7 @@ Public Class SuperConverter
 
         Dim tempSourcePdf As String = Path.GetTempFileName
         Dim tempIntermediatePdf As String = Path.GetTempFileName
+        Dim tempIntermediatePdf2 As String = Path.GetTempFileName
         Dim pdfPath As String = Path.ChangeExtension(WordDocPath, "pdf")
         Call Converters.ConvertWordToPdf(WordDocPath, tempSourcePdf)
 
@@ -28,12 +29,14 @@ Public Class SuperConverter
         appendFileList = appendList.Select(Function(a) a.SourcePath).ToList
 
         'Merge source file and attachments into one pdf
-
         Call PdfManipulation.MergePdfsWithLinks(appendFileList, tempIntermediatePdf)
 
-        'Create final PDF with updated links
+        'Create PDF with updated links    
+        Call PdfManipulation.UpdateLinks(tempIntermediatePdf, appendList, tempIntermediatePdf2)
+
+        'Create final PDF with return links
         File.Delete(pdfPath)
-        Call PdfManipulation.UpdateLinks(tempIntermediatePdf, appendList, pdfPath)
+        Call PdfManipulation.AddReturnLinks(tempIntermediatePdf2, appendList, pdfPath)
 
         'Delete temp files
         'File.Delete(tempSourcePdf)

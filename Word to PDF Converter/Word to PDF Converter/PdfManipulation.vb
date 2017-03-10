@@ -230,7 +230,25 @@ Public Class PdfManipulation
 
     End Function
 
+    Public Shared Function AddReturnLinks(ByVal pdfSourcePath As String, ByVal appendList As List(Of AttachmentFile), ByVal outputPath As String) As Boolean
 
+        Dim bytes As Byte() = File.ReadAllBytes(pdfSourcePath)
+        Dim blackFont As Font = FontFactory.GetFont("Arial", 12, Font.NORMAL, BaseColor.BLACK)
+        Using stream As New MemoryStream()
+            Dim reader As New PdfReader(bytes)
+            Using stamper As New PdfStamper(reader, stream)
+                Dim pages As Integer = reader.NumberOfPages
+                For i As Integer = 1 To pages
+                    ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, New Phrase(i.ToString(), blackFont), 568.0F, 15.0F, 0)
+                Next
+            End Using
+            bytes = stream.ToArray()
+        End Using
+        File.WriteAllBytes(outputPath, bytes)
+
+        Return True
+
+    End Function
 
     Public Class AttachmentFile
 
