@@ -2,7 +2,7 @@
 
 Public Class SuperConverter
 
-    Public Shared Function ConvertWordLinksToPdfandMergeAll(ByVal WordDocPath As String) As Boolean
+    Public Shared Function ConvertWordLinksToPdfandMergeAll(ByVal WordDocPath As String, ByVal options As SuperConverterForm.FormParameters) As Boolean
 
         Dim appendList As New List(Of PdfManipulation.AttachmentFile)
         Dim appendFileList As List(Of String)
@@ -21,12 +21,13 @@ Public Class SuperConverter
 
         'Adds source file pdf to start of list of documents to be merged
         Dim mainDoc As New PdfManipulation.AttachmentFile
-        mainDoc.SourcePath = tempSourcePdf
+        mainDoc.OriginalSourcePath = WordDocPath
+        mainDoc.CurrentSourcePath = tempSourcePdf
         mainDoc.IsMainDocument = True
         appendList.Insert(0, mainDoc)
 
         'make list of just the source filenames
-        appendFileList = appendList.Select(Function(a) a.SourcePath).ToList
+        appendFileList = appendList.Select(Function(a) a.CurrentSourcePath).ToList
 
         'Merge source file and attachments into one pdf
         Call PdfManipulation.MergePdfsWithLinks(appendFileList, tempIntermediatePdf)
@@ -36,7 +37,7 @@ Public Class SuperConverter
 
         'Create final PDF with return links
         File.Delete(pdfPath)
-        Call PdfManipulation.AddReturnLinks(tempIntermediatePdf2, appendList, pdfPath)
+        Call PdfManipulation.AddExtraText(tempIntermediatePdf2, appendList, pdfPath, options)
 
         'Delete temp files
         'File.Delete(tempSourcePdf)
