@@ -7,9 +7,14 @@ Public Class SuperConverter
         Dim appendList As New List(Of PdfManipulation.AttachmentFile)
         Dim appendFileList As List(Of String)
 
-        Dim tempSourcePdf As String = Path.ChangeExtension(Path.GetTempFileName, "pdf")
-        Dim tempIntermediatePdf As String = Path.ChangeExtension(Path.GetTempFileName, "pdf")
-        Dim tempIntermediatePdf2 As String = Path.ChangeExtension(Path.GetTempFileName, "pdf")
+        'Dim tempSourcePdf As String = Path.ChangeExtension(Path.GetTempFileName, "pdf")
+        'Dim tempIntermediatePdf As String = Path.ChangeExtension(Path.GetTempFileName, "pdf")
+        'Dim tempIntermediatePdf2 As String = Path.ChangeExtension(Path.GetTempFileName, "pdf")
+
+        Dim tempSourcePdf As String = Path.GetTempFileName
+        Dim tempIntermediatePdf As String = Path.GetTempFileName
+        Dim tempIntermediatePdf2 As String = Path.GetTempFileName
+
         Dim pdfPath As String = Path.ChangeExtension(WordDocPath, "pdf")
         Call Converters.ConvertWordToPdf(WordDocPath, tempSourcePdf)
 
@@ -32,7 +37,7 @@ Public Class SuperConverter
         'Merge source file and attachments into one pdf
         Call PdfManipulation.MergePdfsWithLinks(appendFileList, tempIntermediatePdf)
 
-        'Create PDF with updated links    
+        'Create PDF with updated links
         Call PdfManipulation.UpdateLinks(tempIntermediatePdf, appendList, tempIntermediatePdf2)
 
         'Create final PDF with return links
@@ -40,8 +45,14 @@ Public Class SuperConverter
         Call PdfManipulation.AddExtraText(tempIntermediatePdf2, appendList, pdfPath, options)
 
         'Delete temp files
-        'File.Delete(tempSourcePdf)
+        File.Delete(tempSourcePdf)
         File.Delete(tempIntermediatePdf)
+        File.Delete(tempIntermediatePdf2)
+
+        'Delete temp attachment files
+        For Each tempFile As PdfManipulation.AttachmentFile In appendList.Where(Function(a) a.IsTempFile = True).ToList
+            File.Delete(tempFile.CurrentSourcePath)
+        Next
 
         Return True
 

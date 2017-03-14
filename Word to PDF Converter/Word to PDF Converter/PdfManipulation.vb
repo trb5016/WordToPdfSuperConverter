@@ -6,8 +6,11 @@ Imports iTextSharp.text.pdf
 Public Class PdfManipulation
 
     Public Shared Function GetPdfNumPages(ByVal FilePath As String) As Integer
-        Dim R As New PdfReader(FilePath)
-        Return R.NumberOfPages
+        Using R As New PdfReader(FilePath)
+            Dim numPages As Integer = R.NumberOfPages
+            R.Close()
+            Return numPages
+        End Using
     End Function
 
     Public Shared Function GetPdfAppendList(ByVal SourceDocPath As String) As List(Of AttachmentFile)
@@ -107,6 +110,7 @@ Public Class PdfManipulation
         Next
 
         R.Close()
+        R = Nothing
 
         Return tempList
 
@@ -129,7 +133,7 @@ Public Class PdfManipulation
                         Next
 
                         R.Close()
-
+                        R = Nothing
                     Next
 
                     Doc.Close()
@@ -143,96 +147,99 @@ Public Class PdfManipulation
 
     Public Shared Function UpdateLinks(ByVal pdfSourcePath As String, ByVal appendList As List(Of AttachmentFile), ByVal outputPath As String) As Boolean
 
-        Dim R As New PdfReader(pdfSourcePath)
+
         Dim pageDictionary As PdfDictionary
         Dim annots As PdfArray
         Dim curLink As Integer 'used for tracking which link we're working on in the appendList
 
         Dim mainDocNumPages As Integer = GetPdfNumPages(appendList(0).CurrentSourcePath) 'The first item in the append list is always the main document
 
+        Using R As New PdfReader(pdfSourcePath)
+            Using FS As New FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None)
+                Using Doc As New Document()
+                    Using writer As New PdfCopy(Doc, FS)
+                        Doc.Open()
 
-        Using FS As New FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None)
-            Using Doc As New Document()
-                Using writer As New PdfCopy(Doc, FS)
-                    Doc.Open()
+                        curLink = 1 'this also skips the first entry in appendList which is the main doc
 
-                    curLink = 1 'this also skips the first entry in appendList which is the main doc
+                        'Loop through each page
+                        For i As Integer = 1 To mainDocNumPages
 
-                    'Loop through each page
-                    For i As Integer = 1 To mainDocNumPages
+                            'Gets current page
+                            pageDictionary = R.GetPageN(i)
 
-                        'Gets current page
-                        pageDictionary = R.GetPageN(i)
+                            'Get all of the annotations for the current page
+                            annots = pageDictionary.GetAsArray(PdfName.ANNOTS)
 
-                        'Get all of the annotations for the current page
-                        annots = pageDictionary.GetAsArray(PdfName.ANNOTS)
-
-                        'Make sure we have something
-                        If IsNothing(annots) OrElse annots.Length = 0 Then
-                            Continue For
-                        End If
-
-                        'Loop through each annotation                        
-                        For Each A As PdfObject In annots.ArrayList
-
-                            'Convert the iText-specific object as a generic pdf object
-                            Dim annotationDictionary As PdfDictionary = DirectCast(PdfReader.GetPdfObject(A), PdfDictionary)
-
-                            'Make sure this annotation has a LINK
-                            If Not annotationDictionary.Get(PdfName.SUBTYPE).Equals(PdfName.LINK) Then
+                            'Make sure we have something
+                            If IsNothing(annots) OrElse annots.Length = 0 Then
                                 Continue For
                             End If
 
-                            'Make sure this annotation has an ACTION
-                            If annotationDictionary.Get(PdfName.A) Is Nothing Then
-                                Continue For
-                            End If
+                            'Loop through each annotation                        
+                            For Each A As PdfObject In annots.ArrayList
 
-                            'Get the ACTION for the current annotation
-                            Dim annotationAction As PdfDictionary = DirectCast(annotationDictionary.Get(PdfName.A), PdfDictionary)
+                                'Convert the iText-specific object as a generic pdf object
+                                Dim annotationDictionary As PdfDictionary = DirectCast(PdfReader.GetPdfObject(A), PdfDictionary)
 
-                            If annotationAction.Get(PdfName.S).Equals(PdfName.URI) Then
+                                'Make sure this annotation has a LINK
+                                If Not annotationDictionary.Get(PdfName.SUBTYPE).Equals(PdfName.LINK) Then
+                                    Continue For
+                                End If
 
-                                'Remove the old action, I don't think this is actually necessary but I do it anyways
-                                annotationAction.Remove(PdfName.S)
+                                'Make sure this annotation has an ACTION
+                                If annotationDictionary.Get(PdfName.A) Is Nothing Then
+                                    Continue For
+                                End If
 
-                                'Add a new action that is a GOTO action
-                                annotationAction.Put(PdfName.S, PdfName.GOTO)
+                                'Get the ACTION for the current annotation
+                                Dim annotationAction As PdfDictionary = DirectCast(annotationDictionary.Get(PdfName.A), PdfDictionary)
 
-                                'The destination is an array containing an indirect reference to the page as well as a fitting option
-                                Dim NewLocalDestination As New PdfArray()
+                                If annotationAction.Get(PdfName.S).Equals(PdfName.URI) Then
 
-                                'Link it to appropriate page
-                                NewLocalDestination.Add(R.GetPageOrigRef(appendList(curLink).AttachmentStartPage))
+                                    'Remove the old action, I don't think this is actually necessary but I do it anyways
+                                    annotationAction.Remove(PdfName.S)
 
-                                'Set it to fit page
-                                NewLocalDestination.Add(PdfName.FIT)
+                                    'Add a new action that is a GOTO action
+                                    annotationAction.Put(PdfName.S, PdfName.GOTO)
 
-                                'Add the array to the annotation's destination (/D)
-                                annotationAction.Put(PdfName.D, NewLocalDestination)
+                                    'The destination is an array containing an indirect reference to the page as well as a fitting option
+                                    Dim NewLocalDestination As New PdfArray()
 
-                                curLink = curLink + 1
+                                    'Link it to appropriate page
+                                    NewLocalDestination.Add(R.GetPageOrigRef(appendList(curLink).AttachmentStartPage))
 
-                            End If
+                                    'Set it to fit page
+                                    NewLocalDestination.Add(PdfName.FIT)
+
+                                    'Add the array to the annotation's destination (/D)
+                                    annotationAction.Put(PdfName.D, NewLocalDestination)
+
+                                    curLink = curLink + 1
+
+                                End If
+
+                            Next
 
                         Next
 
-                    Next
+                        'Writes out final PDF
+                        For i As Integer = 1 To R.NumberOfPages
 
-                    'Writes out final PDF
-                    For i As Integer = 1 To R.NumberOfPages
+                            writer.AddPage(writer.GetImportedPage(R, i))
 
-                        writer.AddPage(writer.GetImportedPage(R, i))
+                        Next
 
-                    Next
+                        Doc.Close()
 
-                    Doc.Close()
-
+                    End Using
                 End Using
             End Using
+            R.Close()
         End Using
 
-        R.Close()
+
+
 
         Return True
 
