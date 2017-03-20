@@ -260,7 +260,7 @@ Public Class PdfManipulation
 
                 For i As Integer = 1 To numPages
 
-                    Dim pageSize As Rectangle = reader.GetPageSize(i)
+                    Dim pageSize As Rectangle = reader.GetPageSizeWithRotation(i)
                     Dim pageCanvas As PdfContentByte = stamper.GetOverContent(i)
                     Dim curAttachment As AttachmentFile = GetCurrentAttachment(appendList, i)
 

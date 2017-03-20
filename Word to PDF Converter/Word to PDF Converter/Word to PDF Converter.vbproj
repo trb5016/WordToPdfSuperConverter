@@ -67,10 +67,11 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E5A412CA8BD07A77386B27CB05AF5DE7CECD187D</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>5AA19BC446FA6ED35B1D436FE5BFF60D8192AA6E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Word to PDF Converter_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
