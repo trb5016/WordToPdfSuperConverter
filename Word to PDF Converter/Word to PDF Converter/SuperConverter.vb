@@ -30,6 +30,11 @@ Public Class SuperConverter
         'make list of just the source filenames
         appendFileList = appendList.Select(Function(a) a.CurrentSourcePath).ToList
 
+        MergePdfFiles(appendFileList.ToArray, "C:\Users\u001tb7\Desktop\test.pdf")
+
+        MsgBox("Halt")
+        Return True
+
         'Merge source file and attachments into one pdf
         Call PdfManipulation.MergePdfsWithLinks(appendFileList, tempIntermediatePdf)
 
