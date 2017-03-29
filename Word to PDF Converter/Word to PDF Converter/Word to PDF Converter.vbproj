@@ -28,7 +28,7 @@
     <SuiteName>Agenda Creator</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -67,7 +67,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>5AA19BC446FA6ED35B1D436FE5BFF60D8192AA6E</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E5A412CA8BD07A77386B27CB05AF5DE7CECD187D</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>
@@ -111,6 +111,7 @@
   <ItemGroup>
     <Compile Include="Converters.vb" />
     <Compile Include="PdfManipulation.vb" />
+    <Compile Include="Scratch.vb" />
     <Compile Include="SuperConverter.vb" />
     <Compile Include="HelperFunctions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
