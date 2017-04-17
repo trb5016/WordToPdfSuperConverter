@@ -267,7 +267,20 @@ Public Class PdfManipulation
                     'Add page Number (main doc and attachments)
                     If options.AddPages = True Then
 
+
+                        'TODO: The addition of the backing box is hacky and doesn't actually adjust based on the text size...
+
                         Dim pageFont As Font = FontFactory.GetFont(FontFactory.HELVETICA, 10, Font.NORMAL, BaseColor.GRAY)
+                        Dim fontHeight As Single = pageFont.BaseFont.GetFontDescriptor(BaseFont.ASCENT, pageFont.Size) - pageFont.BaseFont.GetFontDescriptor(BaseFont.DESCENT, pageFont.Size)
+
+                        Dim pageNumRectangle As New Rectangle(pageSize.Width / 2, pageSize.GetBottom(margin) - 2, pageSize.GetRight(margin), pageSize.GetBottom(margin) + fontHeight)
+                        pageNumRectangle.BackgroundColor = BaseColor.WHITE
+
+
+                        pageCanvas.Rectangle(pageNumRectangle)
+                        pageCanvas.Stroke()
+
+
                         Dim pageNumber As New Phrase(options.PagePrefix & i & " of " & numPages, pageFont)
                         ColumnText.ShowTextAligned(pageCanvas, Element.ALIGN_RIGHT, pageNumber, pageSize.GetRight(margin), pageSize.GetBottom(margin), 0)
 
