@@ -110,10 +110,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters.vb" />
-    <Compile Include="PdfManipulation2.vb" />
     <Compile Include="PdfManipulation.vb" />
     <Compile Include="Scratch.vb" />
-    <Compile Include="SuperConverter2.vb" />
     <Compile Include="SuperConverter.vb" />
     <Compile Include="HelperFunctions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
