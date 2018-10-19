@@ -11,6 +11,7 @@ Public Class SuperConverter
         Dim tempIntermediatePdf As String = Path.GetTempFileName
         Dim tempIntermediatePdf2 As String = Path.GetTempFileName
 
+        'Convert the base word document to a pdf
         Dim pdfPath As String = Path.ChangeExtension(WordDocPath, "pdf")
         Call Converters.ConvertWordToPdf(WordDocPath, tempSourcePdf)
 

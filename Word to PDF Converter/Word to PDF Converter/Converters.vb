@@ -5,7 +5,7 @@ Public Class Converters
 
     Public Shared Function ConvertToPDF(ByVal FilePath As String) As String
 
-        Select Case Path.GetExtension(FilePath)
+        Select Case Path.GetExtension(FilePath).ToLower
             Case ".pdf"
                 Return FilePath
 
