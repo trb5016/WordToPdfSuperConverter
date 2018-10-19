@@ -31,6 +31,7 @@ Partial Class SuperConverterForm
         Me.cbIncludePageNumbers = New System.Windows.Forms.CheckBox()
         Me.cbIncludeHeaders = New System.Windows.Forms.CheckBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.cbAddReturnLinks = New System.Windows.Forms.CheckBox()
         Me.HeaderOptionsPanel = New System.Windows.Forms.Panel()
         Me.tbReplaceRegExWith = New System.Windows.Forms.TextBox()
         Me.tbReplaceRegExFind = New System.Windows.Forms.TextBox()
@@ -40,10 +41,9 @@ Partial Class SuperConverterForm
         Me.pageNumberOptionsPanel = New System.Windows.Forms.Panel()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.tbPageNumberPrefixText = New System.Windows.Forms.TextBox()
-        Me.cbAddReturnLinks = New System.Windows.Forms.CheckBox()
         Me.MarginOffsetPanel = New System.Windows.Forms.Panel()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.tbMarginOffset = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.HeaderOptionsPanel.SuspendLayout()
         Me.pageNumberOptionsPanel.SuspendLayout()
@@ -150,6 +150,18 @@ Partial Class SuperConverterForm
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(588, 186)
         Me.TableLayoutPanel1.TabIndex = 10
         '
+        'cbAddReturnLinks
+        '
+        Me.cbAddReturnLinks.AutoSize = True
+        Me.cbAddReturnLinks.Checked = True
+        Me.cbAddReturnLinks.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbAddReturnLinks.Location = New System.Drawing.Point(3, 109)
+        Me.cbAddReturnLinks.Name = "cbAddReturnLinks"
+        Me.cbAddReturnLinks.Size = New System.Drawing.Size(172, 17)
+        Me.cbAddReturnLinks.TabIndex = 11
+        Me.cbAddReturnLinks.Text = "Add return links to attachments"
+        Me.cbAddReturnLinks.UseVisualStyleBackColor = True
+        '
         'HeaderOptionsPanel
         '
         Me.HeaderOptionsPanel.AutoSize = True
@@ -177,6 +189,7 @@ Partial Class SuperConverterForm
         Me.tbReplaceRegExFind.Name = "tbReplaceRegExFind"
         Me.tbReplaceRegExFind.Size = New System.Drawing.Size(108, 20)
         Me.tbReplaceRegExFind.TabIndex = 3
+        Me.tbReplaceRegExFind.Text = "^\S+\s"
         '
         'Label7
         '
@@ -237,18 +250,6 @@ Partial Class SuperConverterForm
         Me.tbPageNumberPrefixText.TabIndex = 13
         Me.tbPageNumberPrefixText.Text = "Page "
         '
-        'cbAddReturnLinks
-        '
-        Me.cbAddReturnLinks.AutoSize = True
-        Me.cbAddReturnLinks.Checked = True
-        Me.cbAddReturnLinks.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbAddReturnLinks.Location = New System.Drawing.Point(3, 109)
-        Me.cbAddReturnLinks.Name = "cbAddReturnLinks"
-        Me.cbAddReturnLinks.Size = New System.Drawing.Size(172, 17)
-        Me.cbAddReturnLinks.TabIndex = 11
-        Me.cbAddReturnLinks.Text = "Add return links to attachments"
-        Me.cbAddReturnLinks.UseVisualStyleBackColor = True
-        '
         'MarginOffsetPanel
         '
         Me.MarginOffsetPanel.AutoSize = True
@@ -261,6 +262,14 @@ Partial Class SuperConverterForm
         Me.MarginOffsetPanel.Size = New System.Drawing.Size(196, 26)
         Me.MarginOffsetPanel.TabIndex = 11
         '
+        'tbMarginOffset
+        '
+        Me.tbMarginOffset.Location = New System.Drawing.Point(125, 3)
+        Me.tbMarginOffset.Name = "tbMarginOffset"
+        Me.tbMarginOffset.Size = New System.Drawing.Size(68, 20)
+        Me.tbMarginOffset.TabIndex = 1
+        Me.tbMarginOffset.Text = "10"
+        '
         'Label8
         '
         Me.Label8.AutoSize = True
@@ -270,14 +279,6 @@ Partial Class SuperConverterForm
         Me.Label8.Size = New System.Drawing.Size(116, 13)
         Me.Label8.TabIndex = 0
         Me.Label8.Text = "Margin offset of above:"
-        '
-        'tbMarginOffset
-        '
-        Me.tbMarginOffset.Location = New System.Drawing.Point(125, 3)
-        Me.tbMarginOffset.Name = "tbMarginOffset"
-        Me.tbMarginOffset.Size = New System.Drawing.Size(68, 20)
-        Me.tbMarginOffset.TabIndex = 1
-        Me.tbMarginOffset.Text = "10"
         '
         'SuperConverterForm
         '
