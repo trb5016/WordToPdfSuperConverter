@@ -245,7 +245,7 @@ Public Class PdfManipulation
 
     End Function
 
-    Public Shared Function AddExtraText(ByVal pdfSourcePath As String, ByVal appendList As List(Of AttachmentFile), ByVal outputPath As String, ByVal options As SuperConverterForm.FormParameters) As Boolean
+    Public Shared Function AddExtraText(ByVal pdfSourcePath As String, ByVal appendList As List(Of AttachmentFile), ByVal outputPath As String, ByVal options As FormParameters) As Boolean
 
         Dim margin As Single = options.MarginOffset
         Dim bytes As Byte() = File.ReadAllBytes(pdfSourcePath)

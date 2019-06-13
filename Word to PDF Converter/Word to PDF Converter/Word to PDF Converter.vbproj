@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3D436D3E-AF15-4403-9504-437D695866A7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Word_to_PDF_Converter.My.MyApplication</StartupObject>
-    <RootNamespace>Word_to_PDF_Converter</RootNamespace>
+    <StartupObject>Word2Pdf.My.MyApplication</StartupObject>
+    <RootNamespace>Word2Pdf</RootNamespace>
     <AssemblyName>Word to PDF Converter</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters.vb" />
+    <Compile Include="FormParameters.vb" />
     <Compile Include="PdfManipulation.vb" />
     <Compile Include="Scratch.vb" />
     <Compile Include="SuperConverter.vb" />

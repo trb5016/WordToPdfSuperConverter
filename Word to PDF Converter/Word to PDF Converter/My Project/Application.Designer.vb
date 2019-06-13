@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.Word_to_PDF_Converter.SuperConverterForm
+            Me.MainForm = Global.Word2Pdf.SuperConverterForm
         End Sub
     End Class
 End Namespace

@@ -2,7 +2,7 @@
 
 Public Class SuperConverter
 
-    Public Shared Function ConvertWordLinksToPdfandMergeAll(ByVal WordDocPath As String, ByVal options As SuperConverterForm.FormParameters) As Boolean
+    Public Shared Function ConvertWordLinksToPdfandMergeAll(ByVal WordDocPath As String, ByVal options As FormParameters) As Boolean
 
         Dim appendList As New List(Of PdfManipulation.AttachmentFile)
         Dim appendFileList As List(Of String)

@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.ComponentModel
+Imports System.IO
 
 Public Class SuperConverterForm
 
@@ -19,11 +20,15 @@ Public Class SuperConverterForm
 
         If HelperFunctions.OpenArgSourceDocument <> "" Then
             tbDocPath.Text = HelperFunctions.OpenArgSourceDocument
+        Else
+            Call LoadParameters()
         End If
 
     End Sub
 
     Private Sub ConvertToPdf()
+
+        Call SaveParameters()
 
         Dim docPath As String = tbDocPath.Text
 
@@ -79,20 +84,34 @@ Public Class SuperConverterForm
 
     End Function
 
+    Private Sub SaveParameters()
 
-    Public Class FormParameters
+        My.Settings.LastPath = tbDocPath.Text
+        My.Settings.LastPageNum = cbIncludePageNumbers.Checked
+        My.Settings.LastPrefix = tbPageNumberPrefixText.Text
+        My.Settings.LastHeaders = cbIncludeHeaders.Checked
+        My.Settings.LastRegexFind = tbReplaceRegExFind.Text
+        My.Settings.LastRegexReplace = tbReplaceRegExWith.Text
+        My.Settings.LastReturnLinks = cbAddReturnLinks.Checked
+        My.Settings.LastMargin = tbMarginOffset.Text
 
-        Public Property AddPages As Boolean
-        Public Property PagePrefix As String
+    End Sub
 
-        Public Property AddHeaders As Boolean
-        Public Property HeaderRegExFind As String
-        Public Property HeaderRegExReplace As String
+    Private Sub LoadParameters()
 
-        Public Property AddReturnLinks As Boolean
+        tbDocPath.Text = My.Settings.LastPath
+        cbIncludePageNumbers.Checked = My.Settings.LastPageNum
+        tbPageNumberPrefixText.Text = My.Settings.LastPrefix
+        cbIncludeHeaders.Checked = My.Settings.LastHeaders
+        tbReplaceRegExFind.Text = My.Settings.LastRegexFind
+        tbReplaceRegExWith.Text = My.Settings.LastRegexReplace
+        cbAddReturnLinks.Checked = My.Settings.LastReturnLinks
+        tbMarginOffset.Text = My.Settings.LastMargin
 
-        Public Property MarginOffset As Single
+    End Sub
 
-    End Class
+    Private Sub SuperConverterForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Call SaveParameters()
+    End Sub
 
 End Class
