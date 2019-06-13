@@ -95,6 +95,8 @@ Public Class SuperConverterForm
         My.Settings.LastReturnLinks = cbAddReturnLinks.Checked
         My.Settings.LastMargin = tbMarginOffset.Text
 
+        My.Settings.Save()
+
     End Sub
 
     Private Sub LoadParameters()

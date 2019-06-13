@@ -67,7 +67,17 @@ Public Class PdfManipulation
 
                     'Get path of attachment to be appended
                     attachmentFile.OriginalSourcePath = annotationAction.GetAsString(PdfName.URI).ToString
-                    attachmentFile.OriginalSourcePath = Uri.UnescapeDataString(Path.GetFullPath(attachmentFile.OriginalSourcePath)) 'This should take care of cases where the link is a relative path            
+
+                    'Check if this is a absolute URI string
+                    If attachmentFile.OriginalSourcePath.StartsWith("file://") Then
+
+                        attachmentFile.OriginalSourcePath = Uri.UnescapeDataString(attachmentFile.OriginalSourcePath)
+
+                    Else
+                        attachmentFile.OriginalSourcePath = Uri.UnescapeDataString(Path.GetFullPath(attachmentFile.OriginalSourcePath))
+
+                    End If
+
 
                     'Convert to pdf if needed (also store if we're making a temp pdf file)
                     If Path.GetExtension(attachmentFile.OriginalSourcePath) <> ".pdf" Then
