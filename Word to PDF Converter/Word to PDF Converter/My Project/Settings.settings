@@ -26,5 +26,29 @@
     <Setting Name="LastMargin" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
+    <Setting Name="DefaultPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DefaultPrefix" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Page </Value>
+    </Setting>
+    <Setting Name="DefaultRegexFind" Type="System.String" Scope="User">
+      <Value Profile="(Default)">^\S+\s</Value>
+    </Setting>
+    <Setting Name="DefaultRegexReplace" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DefaultPageNum" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DefaultHeaders" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DefaultReturnLinks" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DefaultMargin" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -44,6 +44,8 @@ Partial Class SuperConverterForm
         Me.MarginOffsetPanel = New System.Windows.Forms.Panel()
         Me.tbMarginOffset = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
+        Me.buttonSaveDefaults = New System.Windows.Forms.Button()
+        Me.buttonResetDefaults = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.HeaderOptionsPanel.SuspendLayout()
         Me.pageNumberOptionsPanel.SuspendLayout()
@@ -130,10 +132,13 @@ Partial Class SuperConverterForm
         '
         'TableLayoutPanel1
         '
+        Me.TableLayoutPanel1.AutoSize = True
         Me.TableLayoutPanel1.ColumnCount = 2
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.89796!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.10204!))
+        Me.TableLayoutPanel1.Controls.Add(Me.buttonSaveDefaults, 0, 6)
         Me.TableLayoutPanel1.Controls.Add(Me.cbAddReturnLinks, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.buttonResetDefaults, 1, 6)
         Me.TableLayoutPanel1.Controls.Add(Me.HeaderOptionsPanel, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.cbIncludePageNumbers, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.cbIncludeHeaders, 0, 1)
@@ -141,13 +146,15 @@ Partial Class SuperConverterForm
         Me.TableLayoutPanel1.Controls.Add(Me.MarginOffsetPanel, 0, 4)
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(48, 110)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 5
+        Me.TableLayoutPanel1.RowCount = 7
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(588, 186)
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(722, 267)
         Me.TableLayoutPanel1.TabIndex = 10
         '
         'cbAddReturnLinks
@@ -171,7 +178,7 @@ Partial Class SuperConverterForm
         Me.HeaderOptionsPanel.Controls.Add(Me.Label7)
         Me.HeaderOptionsPanel.Controls.Add(Me.Label6)
         Me.HeaderOptionsPanel.Controls.Add(Me.Label5)
-        Me.HeaderOptionsPanel.Location = New System.Drawing.Point(267, 32)
+        Me.HeaderOptionsPanel.Location = New System.Drawing.Point(327, 32)
         Me.HeaderOptionsPanel.Name = "HeaderOptionsPanel"
         Me.HeaderOptionsPanel.Size = New System.Drawing.Size(189, 71)
         Me.HeaderOptionsPanel.TabIndex = 11
@@ -227,7 +234,7 @@ Partial Class SuperConverterForm
         Me.pageNumberOptionsPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.pageNumberOptionsPanel.Controls.Add(Me.Label4)
         Me.pageNumberOptionsPanel.Controls.Add(Me.tbPageNumberPrefixText)
-        Me.pageNumberOptionsPanel.Location = New System.Drawing.Point(267, 3)
+        Me.pageNumberOptionsPanel.Location = New System.Drawing.Point(327, 3)
         Me.pageNumberOptionsPanel.Name = "pageNumberOptionsPanel"
         Me.pageNumberOptionsPanel.Size = New System.Drawing.Size(314, 23)
         Me.pageNumberOptionsPanel.TabIndex = 13
@@ -254,7 +261,6 @@ Partial Class SuperConverterForm
         '
         Me.MarginOffsetPanel.AutoSize = True
         Me.MarginOffsetPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.TableLayoutPanel1.SetColumnSpan(Me.MarginOffsetPanel, 2)
         Me.MarginOffsetPanel.Controls.Add(Me.tbMarginOffset)
         Me.MarginOffsetPanel.Controls.Add(Me.Label8)
         Me.MarginOffsetPanel.Location = New System.Drawing.Point(3, 152)
@@ -280,11 +286,33 @@ Partial Class SuperConverterForm
         Me.Label8.TabIndex = 0
         Me.Label8.Text = "Margin offset of above:"
         '
+        'buttonSaveDefaults
+        '
+        Me.buttonSaveDefaults.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom), System.Windows.Forms.AnchorStyles)
+        Me.buttonSaveDefaults.AutoSize = True
+        Me.buttonSaveDefaults.Location = New System.Drawing.Point(90, 224)
+        Me.buttonSaveDefaults.Name = "buttonSaveDefaults"
+        Me.buttonSaveDefaults.Size = New System.Drawing.Size(144, 40)
+        Me.buttonSaveDefaults.TabIndex = 12
+        Me.buttonSaveDefaults.Text = "Save Current as Defaults"
+        Me.buttonSaveDefaults.UseVisualStyleBackColor = True
+        '
+        'buttonResetDefaults
+        '
+        Me.buttonResetDefaults.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom), System.Windows.Forms.AnchorStyles)
+        Me.buttonResetDefaults.AutoSize = True
+        Me.buttonResetDefaults.Location = New System.Drawing.Point(450, 224)
+        Me.buttonResetDefaults.Name = "buttonResetDefaults"
+        Me.buttonResetDefaults.Size = New System.Drawing.Size(145, 40)
+        Me.buttonResetDefaults.TabIndex = 11
+        Me.buttonResetDefaults.Text = "Reset to Defaults"
+        Me.buttonResetDefaults.UseVisualStyleBackColor = True
+        '
         'SuperConverterForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(738, 314)
+        Me.ClientSize = New System.Drawing.Size(788, 396)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.butConvert)
         Me.Controls.Add(Me.Label3)
@@ -329,4 +357,6 @@ Partial Class SuperConverterForm
     Friend WithEvents MarginOffsetPanel As Panel
     Friend WithEvents tbMarginOffset As TextBox
     Friend WithEvents Label8 As Label
+    Friend WithEvents buttonResetDefaults As Button
+    Friend WithEvents buttonSaveDefaults As Button
 End Class

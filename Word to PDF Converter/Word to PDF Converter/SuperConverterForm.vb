@@ -21,14 +21,14 @@ Public Class SuperConverterForm
         If HelperFunctions.OpenArgSourceDocument <> "" Then
             tbDocPath.Text = HelperFunctions.OpenArgSourceDocument
         Else
-            Call LoadParameters()
+            Call LoadParameters(False)
         End If
 
     End Sub
 
     Private Sub ConvertToPdf()
 
-        Call SaveParameters()
+        Call SaveParameters(False)
 
         Dim docPath As String = tbDocPath.Text
 
@@ -84,36 +84,62 @@ Public Class SuperConverterForm
 
     End Function
 
-    Private Sub SaveParameters()
+    Private Sub SaveParameters(defaults As Boolean)
 
-        My.Settings.LastPath = tbDocPath.Text
-        My.Settings.LastPageNum = cbIncludePageNumbers.Checked
-        My.Settings.LastPrefix = tbPageNumberPrefixText.Text
-        My.Settings.LastHeaders = cbIncludeHeaders.Checked
-        My.Settings.LastRegexFind = tbReplaceRegExFind.Text
-        My.Settings.LastRegexReplace = tbReplaceRegExWith.Text
-        My.Settings.LastReturnLinks = cbAddReturnLinks.Checked
-        My.Settings.LastMargin = tbMarginOffset.Text
+        Dim settingPrefix = If(defaults, "Default", "Last")
+
+        My.Settings(settingPrefix & "Path") = tbDocPath.Text
+        My.Settings(settingPrefix & "PageNum") = cbIncludePageNumbers.Checked
+        My.Settings(settingPrefix & "Prefix") = tbPageNumberPrefixText.Text
+        My.Settings(settingPrefix & "Headers") = cbIncludeHeaders.Checked
+        My.Settings(settingPrefix & "RegexFind") = tbReplaceRegExFind.Text
+        My.Settings(settingPrefix & "RegexReplace") = tbReplaceRegExWith.Text
+        My.Settings(settingPrefix & "ReturnLinks") = cbAddReturnLinks.Checked
+        My.Settings(settingPrefix & "Margin") = CInt(tbMarginOffset.Text)
 
         My.Settings.Save()
 
     End Sub
 
-    Private Sub LoadParameters()
+    Private Sub LoadParameters(defaults As Boolean)
 
-        tbDocPath.Text = My.Settings.LastPath
-        cbIncludePageNumbers.Checked = My.Settings.LastPageNum
-        tbPageNumberPrefixText.Text = My.Settings.LastPrefix
-        cbIncludeHeaders.Checked = My.Settings.LastHeaders
-        tbReplaceRegExFind.Text = My.Settings.LastRegexFind
-        tbReplaceRegExWith.Text = My.Settings.LastRegexReplace
-        cbAddReturnLinks.Checked = My.Settings.LastReturnLinks
-        tbMarginOffset.Text = My.Settings.LastMargin
+        Dim settingPrefix = If(defaults, "Default", "Last")
+
+        tbDocPath.Text = My.Settings(settingPrefix & "Path")
+        cbIncludePageNumbers.Checked = My.Settings(settingPrefix & "PageNum")
+        tbPageNumberPrefixText.Text = My.Settings(settingPrefix & "Prefix")
+        cbIncludeHeaders.Checked = My.Settings(settingPrefix & "Headers")
+        tbReplaceRegExFind.Text = My.Settings(settingPrefix & "RegexFind")
+        tbReplaceRegExWith.Text = My.Settings(settingPrefix & "RegexReplace")
+        cbAddReturnLinks.Checked = My.Settings(settingPrefix & "ReturnLinks")
+        tbMarginOffset.Text = My.Settings(settingPrefix & "Margin")
 
     End Sub
 
     Private Sub SuperConverterForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Call SaveParameters()
+        Call SaveParameters(False)
     End Sub
+
+    Private Sub ButtonResetDefaults_Click(sender As Object, e As EventArgs) Handles buttonResetDefaults.Click
+
+        If MsgBox("Are you sure you want to clear these settings and reset to defaults?", vbYesNo) = vbYes Then
+
+            Call LoadParameters(True)
+
+        End If
+
+    End Sub
+
+    Private Sub ButtonSaveDefaults_Click(sender As Object, e As EventArgs) Handles buttonSaveDefaults.Click
+
+        If MsgBox("Are you sure you want to overwrite the current defaults with these options?", vbYesNo) = vbYes Then
+            Call SaveParameters(True)
+
+            MsgBox("These settings are now the default settings.")
+
+        End If
+
+    End Sub
+
 
 End Class

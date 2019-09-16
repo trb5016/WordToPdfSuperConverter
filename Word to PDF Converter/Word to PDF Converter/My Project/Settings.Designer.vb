@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.2.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -147,6 +147,102 @@ Namespace My
             End Get
             Set
                 Me("LastMargin") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DefaultPath() As String
+            Get
+                Return CType(Me("DefaultPath"),String)
+            End Get
+            Set
+                Me("DefaultPath") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Page ")>  _
+        Public Property DefaultPrefix() As String
+            Get
+                Return CType(Me("DefaultPrefix"),String)
+            End Get
+            Set
+                Me("DefaultPrefix") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("^\S+\s")>  _
+        Public Property DefaultRegexFind() As String
+            Get
+                Return CType(Me("DefaultRegexFind"),String)
+            End Get
+            Set
+                Me("DefaultRegexFind") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DefaultRegexReplace() As String
+            Get
+                Return CType(Me("DefaultRegexReplace"),String)
+            End Get
+            Set
+                Me("DefaultRegexReplace") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property DefaultPageNum() As Boolean
+            Get
+                Return CType(Me("DefaultPageNum"),Boolean)
+            End Get
+            Set
+                Me("DefaultPageNum") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property DefaultHeaders() As Boolean
+            Get
+                Return CType(Me("DefaultHeaders"),Boolean)
+            End Get
+            Set
+                Me("DefaultHeaders") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property DefaultReturnLinks() As Boolean
+            Get
+                Return CType(Me("DefaultReturnLinks"),Boolean)
+            End Get
+            Set
+                Me("DefaultReturnLinks") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("10")>  _
+        Public Property DefaultMargin() As Integer
+            Get
+                Return CType(Me("DefaultMargin"),Integer)
+            End Get
+            Set
+                Me("DefaultMargin") = value
             End Set
         End Property
     End Class
