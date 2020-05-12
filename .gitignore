@@ -240,3 +240,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# removed to not include any publish path information in repo
+*.vbproj
